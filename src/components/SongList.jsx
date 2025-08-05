@@ -1,65 +1,77 @@
-import React from "react";
-import { FaMusic, FaUserAlt, FaTags, FaThumbsUp } from "react-icons/fa";
+import React, { useState } from "react";
+import {
+  FaMusic,
+  FaUserAlt,
+  FaTags,
+  FaThumbsUp,
+  FaThumbsDown,
+  FaSearch,
+} from "react-icons/fa";
 
-export default function SongList({ songs, onVote, selectedGenre }) {
+const SongList = ({ songs, onVote, onDiscredit, selectedGenre, searchQuery }) => {
+  const [localSearch, setLocalSearch] = useState(searchQuery || "");
+
+  const genres = ["All", ...new Set(songs.map((song) => song.genre || "Uncategorized"))];
+
   const filtered =
     selectedGenre === "All"
       ? songs
       : songs.filter((song) => song.genre === selectedGenre);
 
-  const sorted = [...filtered].sort((a, b) => b.votes - a.votes);
+  const searched = filtered.filter((song) =>
+    `${song.title} ${song.artist}`.toLowerCase().includes(localSearch.toLowerCase())
+  );
+
+  const sorted = [...searched].sort((a, b) => b.votes - a.votes);
 
   return (
-    <section className="space-y-6">
-      <h2 className="text-3xl font-bold text-purple-300 flex items-center gap-2">
-        <FaMusic /> Submissions
-      </h2>
+    <div className="space-y-6">
+      {/* Search */}
+      {/* <div className="flex items-center gap-2 mb-4">
+        <FaSearch className="text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search songs..."
+          value={localSearch}
+          onChange={(e) => setLocalSearch(e.target.value)}
+          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+        />
+      </div> */}
 
       {sorted.length === 0 ? (
         <p className="text-gray-400 text-center italic">
-          No songs in this genre.
+          No songs match your filters.
         </p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
           {sorted.map((song, idx) => (
             <div
               key={idx}
-              className="bg-gray-950 border border-gray-800 rounded-xl p-5 shadow-md hover:shadow-xl transition-all"
+              className="bg-gray-950 border border-gray-800 rounded-lg p-4 shadow-sm hover:shadow-md transition-all"
             >
-              {/* Header */}
-              <div className="flex justify-between items-start mb-2">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <FaMusic className="text-purple-400" />
-                    {song.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 flex items-center gap-2">
-                    <FaUserAlt className="text-gray-500" />
-                    {song.artist}
-                  </p>
-                  <p className="text-xs text-gray-500 flex items-center gap-2">
-                    <FaTags className="text-gray-500" />
-                    Genre:{" "}
-                    <span className="text-purple-400 font-medium">
-                      {song.genre || "Uncategorized"}
-                    </span>
-                  </p>
-                </div>
-
-                {/* Vote button */}
-                <button
-                  onClick={() => onVote(songs.indexOf(song))}
-                  className="flex items-center gap-2 px-3 py-1 bg-purple-700 hover:bg-purple-600 text-white text-sm rounded-full transition"
-                >
-                  <FaThumbsUp /> {song.votes}
-                </button>
+              {/* Header Info */}
+              <div className="mb-3">
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <FaMusic className="text-purple-400" />
+                  {song.title}
+                </h3>
+                <p className="text-sm text-gray-400 flex items-center gap-2 mt-1">
+                  <FaUserAlt className="text-gray-500" />
+                  {song.artist}
+                </p>
+                <p className="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                  <FaTags className="text-gray-500" />
+                  <span className="text-purple-400 font-medium">
+                    {song.genre || "Uncategorized"}
+                  </span>
+                </p>
               </div>
 
-              {/* Embed Link */}
+              {/* Player */}
               {song.link && (
-                <div className="mt-4">
+                <div className="mb-3">
                   <iframe
-                    className="w-full h-48 rounded-md border border-gray-700"
+                    className="w-full h-40 rounded border border-gray-700"
                     src={getEmbedUrl(song.link)}
                     title={song.title}
                     frameBorder="0"
@@ -68,15 +80,33 @@ export default function SongList({ songs, onVote, selectedGenre }) {
                   ></iframe>
                 </div>
               )}
+
+              {/* Buttons */}
+              <div className="flex justify-between items-center mt-2">
+                <button
+                  onClick={() => onVote(songs.indexOf(song))}
+                  className="flex items-center gap-1 px-3 py-1 bg-purple-700 hover:bg-purple-600 text-white text-xs rounded-full transition"
+                >
+                  <FaThumbsUp /> {song.votes}
+                </button>
+                <button
+                  onClick={() => onDiscredit(songs.indexOf(song))}
+                  className="flex items-center gap-1 px-3 py-1 bg-red-700 hover:bg-red-600 text-white text-xs rounded-full transition"
+                >
+                  <FaThumbsDown /> {song.downvotes || 0}
+                </button>
+              </div>
             </div>
           ))}
         </div>
       )}
-    </section>
+    </div>
   );
-}
+};
 
-// Convert regular links into embeddable URLs
+export default SongList;
+
+// Convert song links to embeddable format
 function getEmbedUrl(link) {
   if (link.includes("youtube.com/watch?v=")) {
     const videoId = new URL(link).searchParams.get("v");

@@ -11,31 +11,32 @@ export default function Leaderboard({ songs }) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-purple-300 text-center flex items-center justify-center gap-2">
-        🏆 Leaderboard
-      </h2>
+      
 
       <ul className="space-y-3">
         {topSongs.map((song, idx) => (
           <li
             key={idx}
-            className="flex justify-between items-center bg-gray-900 border border-gray-700 p-4 rounded-lg shadow-md hover:bg-gray-800 transition"
+            className="flex justify-between items-center bg-gray-950 border border-gray-800 p-3 rounded-md shadow-sm hover:shadow-md transition"
           >
-            {/* Rank + Song Details */}
+            {/* Left: Rank and Song Details */}
             <div className="flex items-center gap-3">
               <span className="text-2xl">{rankIcons[idx] || "🎵"}</span>
-              <div>
-                <p className="text-white font-semibold text-lg">{song.title}</p>
-                <p className="text-sm text-gray-400">
-                  {song.artist} <span className="text-purple-400">({song.genre || "N/A"})</span>
+              <div className="leading-tight">
+                <p className="text-sm font-medium text-white">{song.title}</p>
+                <p className="text-xs text-gray-400">
+                  {song.artist}{" "}
+                  <span className="text-purple-400">
+                    ({song.genre || "Uncategorized"})
+                  </span>
                 </p>
               </div>
             </div>
 
-            {/* Votes */}
-            <span className="text-purple-400 font-bold text-lg">
-              {song.votes} 👍
-            </span>
+            {/* Right: Vote Count */}
+            <div className="bg-purple-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-inner">
+              {song.votes} votes
+            </div>
           </li>
         ))}
       </ul>

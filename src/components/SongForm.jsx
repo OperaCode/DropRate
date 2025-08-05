@@ -20,7 +20,7 @@ export default function SongForm({ onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !artist) return;
-    onAdd({ title, artist, link, genre: genres[0] || "Uncategorized" }); // Choose first selected
+    onAdd({ title, artist, link, genre: genres[0] || "Uncategorized" }); 
     setTitle("");
     setArtist("");
     setLink("");
@@ -32,10 +32,7 @@ export default function SongForm({ onAdd }) {
       onSubmit={handleSubmit}
       className="space-y-6"
     >
-      <h2 className="text-2xl font-bold text-purple-300 flex items-center gap-2">
-        🎤 Submit a Track
-      </h2>
-
+      
       <div className="space-y-1">
         <label className="text-sm font-semibold flex items-center gap-2 text-gray-300">
           <FaMusic /> Song Title
