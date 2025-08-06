@@ -1,12 +1,39 @@
-# React + Vite
+# 🎧 DropRate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**DropRate** is a music discovery and rating platform where users can submit songs, upvote tracks, and explore the latest bangers across various genres. It’s built for music lovers who want to share their taste and find fresh sounds from the community.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🎵 Submit songs with title, artist, genre, and URL
+- 🔍 Filter by genre and search by title or artist
+- 👍 Vote up your favorite songs or 👎 discredit them
+- 🏆 Leaderboard showing top-voted tracks
+- 🔄 Real-time updates 
+- 🖥️ Responsive and minimalist UI with modern design
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, Tailwind CSS, React Icons
+- **State Management**: useState, useEffect 
+- **Deployment**: Vercel 
+
+---
+
+## 🧑‍💻 Getting Started
+
+### Prerequisites
+
+- Node.js & npm installed
+- Git (for cloning the repo)
+
+### Installation
+
+```bash
+git clone https://github.com/OperaCode/DropRate.git
+cd droprate
+npm install
+npm start

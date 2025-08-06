@@ -155,7 +155,7 @@ export default function SongForm({ onAdd, theme }) {
           ))}
         </div>
       </div>
-
+          {/* Submit Song */}
       <button
         type="submit"
         className={`w-full py-3 px-4 rounded font-bold transition-all duration-200 hover:scale-105 ${

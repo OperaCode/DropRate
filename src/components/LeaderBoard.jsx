@@ -47,8 +47,7 @@ export default function Leaderboard({ songs, theme }) {
                 ? "bg-gray-900 border-gray-800"
                 : "bg-gray-50 border-gray-200"
             }`}
-            role="listitem"
-            aria-label={`Rank ${idx + 1}: ${song.title} by ${song.artist}`}
+           
           >
             {/* Main Row: Rank, Song Details, Votes */}
             <div className="flex justify-between items-center">
@@ -111,6 +110,7 @@ export default function Leaderboard({ songs, theme }) {
               </div>
             )}
             {song.link && (
+
               <button
                 onClick={() => handleToggleExpand(idx)}
                 className={`text-xs mt-2 ${

@@ -3,7 +3,7 @@ import { FaMusic, FaUserAlt, FaTags, FaThumbsUp, FaThumbsDown } from "react-icon
 
 const SongList = ({ songs, onVote, onDiscredit, selectedGenre, searchQuery, theme }) => {
   const [expandedIds, setExpandedIds] = useState(new Set());
-  const [buttonStates, setButtonStates] = useState({}); // Track button loading/disabled states
+  const [buttonStates, setButtonStates] = useState({}); 
 
   const filteredSongs = useMemo(() => {
     const filtered = selectedGenre === "All"
@@ -33,7 +33,7 @@ const SongList = ({ songs, onVote, onDiscredit, selectedGenre, searchQuery, them
   const handleVote = async (index, songId) => {
     setButtonStates((prev) => ({ ...prev, [`vote-${songId}`]: true }));
     try {
-      await onVote(index); // Assume onVote is async if API-backed
+      await onVote(index); 
     } finally {
       setButtonStates((prev) => ({ ...prev, [`vote-${songId}`]: false }));
     }
@@ -42,7 +42,7 @@ const SongList = ({ songs, onVote, onDiscredit, selectedGenre, searchQuery, them
   const handleDiscredit = async (index, songId) => {
     setButtonStates((prev) => ({ ...prev, [`discredit-${songId}`]: true }));
     try {
-      await onDiscredit(index); // Assume onDiscredit is async if API-backed
+      await onDiscredit(index); 
     } finally {
       setButtonStates((prev) => ({ ...prev, [`discredit-${songId}`]: false }));
     }
